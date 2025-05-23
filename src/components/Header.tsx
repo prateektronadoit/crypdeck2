@@ -22,7 +22,7 @@ const Header: React.FC = () => {
           <nav className="hidden md:flex space-x-8">
             <a href="#hero" className="text-[#E9D5FF] hover:text-white transition-colors font-medium">Home</a>
             <a href="#products" className="text-[#E9D5FF] hover:text-white transition-colors font-medium">Our Product</a>
-            <a href="#Contact" className="text-[#E9D5FF] hover:text-white transition-colors font-medium">About Us</a>
+            <a href="#about" className="text-[#E9D5FF] hover:text-white transition-colors font-medium">About Us</a>
           </nav>
         </div>
 

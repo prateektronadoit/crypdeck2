@@ -8,31 +8,34 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="fixed w-full top-0 z-50 bg-black backdrop-blur-sm border-b border-[#A855F7]/20">
+    <header className="fixed w-full top-0 z-50 bg-transparent backdrop-blur-sm">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 py-4">
         {/* Logo on the left */}
         <div className="flex-shrink-0">
-          <a href="#" className="text-2xl font-bold text-[#A855F7] hover:text-[#E9D5FF] transition-colors">
-            Crypquue
+          <a href="#" className="flex items-center">
+            <span className="text-xl font-bold text-white">Crypquue</span>
           </a>
         </div>
         
         {/* Navigation in the middle */}
         <div className="flex-grow flex items-center justify-center">
           <nav className="hidden md:flex space-x-8">
-            <a href="#hero" className="text-[#E9D5FF] hover:text-white transition-colors font-medium">Home</a>
-            <a href="#products" className="text-[#E9D5FF] hover:text-white transition-colors font-medium">Our Product</a>
-            <a href="#about" className="text-[#E9D5FF] hover:text-white transition-colors font-medium">About Us</a>
+            <a href="#hero" className="text-white/80 hover:text-white transition-colors font-medium text-sm">Home</a>
+            <a href="#products" className="text-white/80 hover:text-white transition-colors font-medium text-sm">Products</a>
+            <a href="#about" className="text-white/80 hover:text-white transition-colors font-medium text-sm">About Us</a>
           </nav>
         </div>
 
         <div className="flex items-center space-x-4">
-          <button className="hidden md:block bg-[#A855F7] text-white px-6 py-2 rounded-lg hover:bg-[#9333EA] transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+          <a 
+            href="#started"
+            className="hidden md:block bg-white text-[#0c0a1f] px-4 py-2 rounded-md hover:bg-gray-100 transition-all text-sm font-medium"
+          >
             Get Started
-          </button>
+          </a>
           <button 
             onClick={toggleMenu}
-            className="md:hidden text-[#E9D5FF] hover:text-[#A855F7] transition-colors"
+            className="md:hidden text-white hover:text-white/80 transition-colors"
           >
             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               {isOpen ? (
@@ -47,12 +50,15 @@ const Header: React.FC = () => {
 
       {/* Mobile menu */}
       <div 
-        className={`md:hidden ${isOpen ? 'block' : 'hidden'} bg-black border-b border-[#A855F7]/20`}
+        className={`md:hidden ${isOpen ? 'block' : 'hidden'} bg-[#0c0a1f]/90 backdrop-blur-sm`}
       >
         <nav className="px-4 pt-2 pb-4 space-y-2">
-          <a href="#hero" className="block text-[#E9D5FF] hover:text-white transition-colors py-2">Home</a>
-          <a href="#products" className="block text-[#E9D5FF] hover:text-white transition-colors py-2">Our Product</a>
-          <a href="#about" className="block text-[#E9D5FF] hover:text-white transition-colors py-2">About Us</a>
+          <a href="#hero" className="block text-white/80 hover:text-white transition-colors py-2 text-sm">Home</a>
+          <a href="#products" className="block text-white/80 hover:text-white transition-colors py-2 text-sm">Products</a>
+          <a href="#about" className="block text-white/80 hover:text-white transition-colors py-2 text-sm">About Us</a>
+          <div className="pt-2 border-t border-white/10 mt-2">
+            <a href="#started" className="block text-white/80 hover:text-white transition-colors py-2 text-sm font-medium">Get Started</a>
+          </div>
         </nav>
       </div>
     </header>

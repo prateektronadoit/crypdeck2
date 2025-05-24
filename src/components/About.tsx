@@ -56,7 +56,15 @@ const About: React.FC = () => {
   
   return (
     <section id="about" className="py-20 relative z-10 overflow-hidden">
-      <div className="absolute inset-0 bg-black/30 backdrop-blur-sm z-0"></div>
+      {/* Background image */}
+      <div className="absolute inset-0 w-full h-full z-0">
+        <img 
+          src="/q-97c536f9.png" 
+          alt="Background" 
+          className="absolute w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+      </div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         <div className="text-center mb-12">

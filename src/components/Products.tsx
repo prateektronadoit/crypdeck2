@@ -89,7 +89,7 @@ const Products: React.FC = () => {
   };
 
   return (
-    <section className="py-20 bg-transparent relative z-10">
+    <section className="pt-0 pb-20 bg-transparent relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-[#A855F7] mb-4">OUR PRODUCTS</h2>
@@ -100,52 +100,48 @@ const Products: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {products.map((product, index) => (
             <div 
               key={index} 
-              className={`bg-[#1a1033]/50 backdrop-blur-md rounded-xl overflow-hidden border border-[#A855F7]/20 transition-all duration-500 ${expandedCard === index ? 'transform scale-[1.03] shadow-[0_0_30px_rgba(168,85,247,0.3)] border-[#A855F7]/70 z-20' : 'hover:shadow-[0_0_15px_rgba(168,85,247,0.15)] hover:border-[#A855F7]/40'}`}
+              className={`group bg-[#1a1033]/80 backdrop-blur-md rounded-xl overflow-hidden transition-all duration-500 border border-transparent hover:border-[#A855F7] ${expandedCard === index ? 'shadow-[0_0_30px_rgba(168,85,247,0.3)] z-20' : ''}`}
               onMouseEnter={() => handleMouseEnter(index)}
               onMouseLeave={handleMouseLeave}
             >
               {/* Card Content */}
               <div className="flex flex-col h-full">
-                {/* Image container */}
-                <div className="relative h-52 overflow-hidden">
-                  {/* Background gradient as fallback */}
-                  <div 
-                    className="absolute inset-0 w-full h-full" 
-                    style={{ background: getGradientStyle(index) }}
-                  ></div>
-                  
-                  {/* Image with error handling */}
+                {/* Image container covering full top border - no overlays */}
+                <div className="relative h-48 overflow-hidden">
+                  {/* Image with full cover style */}
                   <img 
                     src={product.image} 
                     alt={product.title}
-                    className={`w-full h-full object-cover object-center transition-transform duration-700 ${expandedCard === index ? 'scale-110' : 'scale-100'}`}
+                    className="w-full h-full object-cover object-center"
                     onError={(e) => {
-                      // Hide broken image and show only gradient background
+                      // If image fails to load, show a gradient background
                       (e.target as HTMLImageElement).style.display = 'none';
+                      const parent = (e.target as HTMLImageElement).parentElement;
+                      if (parent) {
+                        const gradientDiv = document.createElement('div');
+                        gradientDiv.className = 'absolute inset-0 w-full h-full';
+                        gradientDiv.style.background = getGradientStyle(index);
+                        parent.appendChild(gradientDiv);
+                      }
                     }}
                     loading="lazy"
                   />
-                  
-                  {/* Overlay gradient */}
-                  <div className={`absolute inset-0 bg-gradient-to-t from-[#1a1033] via-[#1a1033]/70 to-transparent transition-opacity duration-300 ${expandedCard === index ? 'opacity-90' : 'opacity-70'}`}></div>
-                  
-                  {/* Title positioned at the bottom of the image */}
-                  <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <h3 className={`text-2xl font-bold transition-colors duration-300 ${expandedCard === index ? 'text-[#A855F7]' : 'text-white'}`}>{product.title}</h3>
-                    {product.subtitle && (
-                      <h4 className="text-sm font-semibold text-[#E9D5FF] transition-colors duration-300">{product.subtitle}</h4>
-                    )}
-                  </div>
                 </div>
                 
-                {/* Content section */}
-                <div className="p-5 flex flex-col flex-grow">
+                {/* Title and Description */}
+                <div className="p-5 border-t border-purple-500/20 flex flex-col flex-grow">
+                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-[#A855F7] transition-colors duration-300">{product.title}</h3>
+                  
+                  {product.subtitle && (
+                    <h4 className="text-sm font-semibold text-[#E9D5FF]/70 mb-3">{product.subtitle}</h4>
+                  )}
+                  
                   <div className="description-container overflow-hidden transition-all duration-500" style={{ maxHeight: expandedCard === index ? '1000px' : '80px' }}>
-                    <p className="text-[#E9D5FF] transition-colors duration-300">
+                    <p className="text-[#E9D5FF]/80 text-sm leading-relaxed">
                       {expandedCard === index ? product.description : truncateDescription(product.description)}
                     </p>
                     
@@ -153,13 +149,13 @@ const Products: React.FC = () => {
                       <div className="mt-4 bg-[#2d1a5a]/60 p-3 rounded-lg border border-[#A855F7]/30">
                         <div className="flex justify-between items-center">
                           <div>
-                            <p className="text-[#E9D5FF] text-sm">Current Price</p>
-                            <p className="text-xl font-bold text-white">{product.priceInfo.current}</p>
+                            <p className="text-[#E9D5FF] text-xs">Current Price</p>
+                            <p className="text-lg font-bold text-white">{product.priceInfo.current}</p>
                           </div>
                           <div className="h-10 w-0.5 bg-[#A855F7]/20"></div>
                           <div>
-                            <p className="text-[#E9D5FF] text-sm">Expected Price</p>
-                            <p className="text-xl font-bold text-[#A855F7]">{product.priceInfo.expected}</p>
+                            <p className="text-[#E9D5FF] text-xs">Expected Price</p>
+                            <p className="text-lg font-bold text-[#A855F7]">{product.priceInfo.expected}</p>
                           </div>
                         </div>
                       </div>
@@ -167,12 +163,12 @@ const Products: React.FC = () => {
                     
                     {expandedCard === index && product.features && (
                       <div className="mt-4">
-                        <h5 className="text-md font-semibold text-[#A855F7] mb-2">Key Features</h5>
+                        <h5 className="text-sm font-semibold text-[#A855F7] mb-2">Key Features</h5>
                         <ul className="space-y-1">
                           {product.features.map((feature, idx) => (
-                            <li key={idx} className="flex items-center text-[#E9D5FF] text-sm">
-                              <span className="mr-2 text-[#A855F7] text-md">•</span>
-                              {feature}
+                            <li key={idx} className="flex items-start text-[#E9D5FF]/80 text-xs">
+                              <span className="mr-2 text-[#A855F7] mt-0.5">•</span>
+                              <span>{feature}</span>
                             </li>
                           ))}
                         </ul>
@@ -180,11 +176,11 @@ const Products: React.FC = () => {
                     )}
                   </div>
                   
-                  {/* Read more indicator */}
+                  {/* Hover to see more indicator */}
                   {expandedCard !== index && (
-                    <div className="mt-2 text-[#A855F7] text-sm font-medium flex items-center">
-                      <span>Hover to see more</span>
-                      <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <div className="mt-2 text-[#A855F7] text-xs font-medium flex items-center">
+                      <span>Hover for details</span>
+                      <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                       </svg>
                     </div>

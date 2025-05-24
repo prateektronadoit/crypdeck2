@@ -15,7 +15,7 @@ const Footer: React.FC = () => {
               alt="Crypplesk Logo" 
               className="h-8 sm:h-10 w-auto mr-2 sm:mr-3"
             />
-            <span className="text-[#E9D5FF] font-medium text-base sm:text-lg">CRYPQUE</span>
+            <span className="text-[#E9D5FF] font-medium text-base sm:text-lg">CRYPQUUE</span>
           </div>
           
           {/* Copyright - centered on mobile, right on desktop */}
